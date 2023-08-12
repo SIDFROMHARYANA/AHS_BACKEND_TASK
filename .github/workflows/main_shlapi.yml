@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'shlapi'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48E9EE9169754C75B25BD7955E791AFF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D1DE22802C25410385EBE9E8D9C4FA91 }}
           package: .
