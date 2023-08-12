@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 
 const route = require('./routes/route')
 const app = express();
-const mongoose=require('mongoose')
+const mongoose = require('mongoose')
 mongoose.connect("mongodb+srv://sid:jaiguruji@cluster0.dbzpsfq.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true
 })

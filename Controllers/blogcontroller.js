@@ -9,26 +9,38 @@ const ObjectId = require('mongoose').Types.ObjectId
 
 const createblog = async (req, res) => {
    
-    try {
+    try{
         if (Object.keys(req.body).length == 0) {
             return res.status(400).send({ Error: "Body  should be not empty" })
         }
         
         let body = req.body
         
-        if (!(body.title && body.content && body.author && body.description )) {
-            return res.status(400).send({ status: false, msg:" Body must contain title, content and tags !" })
+        if (!(body.title)) {
+            return res.status(400).send({ status: false, msg:" Body must contain title !"})
         }
+
+        
+        if (!(body.content)) {
+            return res.status(400).send({ status: false, msg:" Body must contain content !"})
+        }
+
+        if (!(body.tags)) {
+            return res.status(400).send({ status: false, msg:" Body must contain tags !"})
+        }
+
+        if (!(body.author)) {
+            return res.status(400).send({ status: false, msg:" Body must contain author !"})
+        }
+        
         
        
         let id = req.body.userId
-        if (!ObjectId.isValid(body.userId)) {
-            return res.status(404).send({ status: false, msg: "UserId invalid" });
-          }
        
-        let user = await user.findById(id)
        
-        if (!user) {
+        let users = await user.findById(id)
+       
+        if (!users) {
             return res.status(404).send({ status: false, msg: "User not found" })
         }
                        
@@ -37,20 +49,20 @@ const createblog = async (req, res) => {
         
         let result = await data.save()
         
-        let ig = result._id.toString()
         
-        if(result.isPublished == true){
-            result = await blog.findOneAndUpdate({_id:ig},{$set:{ispublishedAt:Date.now()}},{new:true})
+        if(result.isPublished == false){
+            result = await blog.findOneAndUpdate({$set:{ispublishedAt:Date.now()}},{new:true})
         }
         res.status(201).send({ status: true, data: result })
     }
-
-    catch (error) {
-        return res.status(500).send({ status: false, msg: error.message })
+    catch(error)
+    {
+        return res.status(500).send({status:false , msg : error.message})
     }
 }
 
 
+  
 
 const getblogs = async (req, res) => {
     try {
@@ -62,7 +74,7 @@ const getblogs = async (req, res) => {
              return blogs.length == 0 ?  res.status(404).send({ status: false, msg: "Blog are not found" }) : res.send({ status: true, data: blogs })
         }
         else {
-            let blogs = await blog.find({ isDeleted: false , isPublished: true })
+            let blogs = await blog.find({ isDeleted: false , isPublished: false })
             return blogs.length == 0 ? res.status(404).send({ status: false, msg: "Blog are not found" }) : res.send({ status: true, data: blogs })
         }
         
@@ -86,7 +98,7 @@ const getblogsbyId = async(req,res) => {
 
     //Validate: The blogId is valid or not.
     
-    let blog = await blog.findById({ _id: blog_Id }, {isDeleted: false} , {isPublished: true })
+    let blogs = await blog.findById({ _id: blog_Id }, {isDeleted: false} , {isPublished: false })
    {
     return blogs.length == 0 ? res.status(404).send({ status: false, msg: "Blog are not found" }) : res.send({ status: true, data: blogs })
 }

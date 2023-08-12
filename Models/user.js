@@ -18,6 +18,6 @@ const usermodelschema = mongoose.Schema({
       unique:true
     }
   
-  },{timestamps:true})
+  }, {timestamps:true})
   
   module.exports = mongoose.model('Usermodel',usermodelschema)
