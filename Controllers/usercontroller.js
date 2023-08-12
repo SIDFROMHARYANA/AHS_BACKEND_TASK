@@ -49,7 +49,7 @@ const createUser = async(req, res) => {
 
 }
 const login = async function (req, res) {
-    try {
+    // try {
         let email = req.body.email
         let password = req.body.password
         let data = req.body
@@ -60,12 +60,12 @@ const login = async function (req, res) {
         
         if (!password) return res.status(400).send({ status: false, msg: "password is required" })
         
-        const user = await user.findOne({ email: email, password: password })
+        const users = await user.findOne({ email: email, password: password })
        
-        if (!user) return res.status(401).send({ status: false, msg: "Email or Password Invalid Please try again !!" })
+        if (!users) return res.status(401).send({ status: false, msg: "Email or Password Invalid Please try again !!" })
         
         const token = jwt.sign({
-            userId: user._id.toString(),
+            userId: user._id,
             batch: "plutonium",
 
         }, "this is a secreat key")
@@ -74,10 +74,10 @@ const login = async function (req, res) {
         res.status(200).send({ status: true, data:{token:token} })
 
     }
-    catch (error) {
-        return res.status(500).send({ status: false, msg: error.message })
-    }
-}
+//     catch (error) {
+//         return res.status(500).send({ status: false, msg: error.message })
+//     }
+// }
 
 module.exports.createUser = createUser
 module.exports.login = login

@@ -15,6 +15,10 @@ const blogmodelschema = mongoose.Schema({
     required:true
   },
 
+  body:{
+    type:String,
+    required:true
+  },
    userId:{
     type:ObjectId,
     ref:'user'
@@ -43,5 +47,5 @@ const blogmodelschema = mongoose.Schema({
   
 },{timestamps:true})
 
-module.exports=mongoose.model('Blogmodel',blogmodelschema)
+module.exports = mongoose.model('Blogmodel',blogmodelschema)
 
