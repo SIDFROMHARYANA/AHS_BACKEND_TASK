@@ -8,8 +8,8 @@ const authorz = async (req, res, next) => {
         
         let id = req.params.blogid
         
-        let blog = await blog.findById(id)
-        if (!blog) {
+        let Blogs = await blog.findById(id)
+        if (!Blogs) {
             return res.status(404).send({status:false,msg:"blog is not found given id"})
         }
         
