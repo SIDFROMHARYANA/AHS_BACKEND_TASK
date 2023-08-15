@@ -13,7 +13,7 @@ router.post("/login", Usercontroller.login)
 
 router.post('/posts', check.authent, BlogController.createblog)
 router.get('/posts' , check.authent,  BlogController.getblogs)
-router.get('/posts/:blogid', access.authorz , BlogController.getblogsbyId)
+router.get('/posts/:blogid', check.authent, BlogController.getblogsbyId)
 
 router.put('/posts/:blogid', access.authorz , BlogController.blogsUpdate)
 router.delete("/posts/:blogid",  access.authorz , BlogController.deleteblog)
